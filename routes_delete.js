@@ -1,15 +1,17 @@
 const express = require('express')
 const router = express.Router()
 
-router.delete('/deletarUsuario/:id', (request, response) => {
-    const deletar = request.params.id
+router.delete('/deletarUsuario', (request, response) => {
 
-    if (!request.params.id) {
-          return response.status(406).json({ message: "Está faltando dados para concluir a operação" });
-        }
-     
-        response.status(200).json({ message: "Deletado com sucesso" });
-      });
-      
+  const id = request.query.id
+
+  if (!id || !id === "") {
+    return response.status(406).json({ message: "Está faltando dados para concluir a operação" });
+  }
+  else {
+    response.status(200).json({ message: "Deletado com sucesso" });
+  }
+
+});
 
 module.exports = router
