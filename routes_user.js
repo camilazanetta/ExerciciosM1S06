@@ -1,7 +1,17 @@
 const express = require('express')
 const router = express.Router()
 
-router.post('/adicionarUsuario', (request, response) => {
+// Middleware verificarCargo
+const verificarCargo = (request, response, next) => {
+    const cargo = request.body.cargo
+    if (cargo === 'líder') {
+      next() // aí prossegue com a função do endpoint
+    } else {
+      response.status(406).json({ message: 'Usuário não pode realizar esta operação' })
+    }
+  }
+
+router.post('/adicionarUsuario', verificarCargo, (request, response) => {
     
     const dados = {
     nome: request.body.nome,
